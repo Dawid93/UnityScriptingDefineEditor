@@ -11,6 +11,7 @@ namespace SDS.Editor
     public class ScriptingDefineTool : EditorWindow
     {
         private List<ScriptingDefineSymbolDataModel> _defines;
+        private VisualElement _listContainer;
         
         [MenuItem("Tools/ScriptingDefineTool")]
         public static void ShowExample()
@@ -31,6 +32,11 @@ namespace SDS.Editor
             VisualElement uxmlRoot = visualTree.CloneTree();
             root.Add(uxmlRoot);
             root.styleSheets.Add(styleSheet);
+
+            _listContainer = root.Q<ListView>("ScriptingDefineSymbolList");
+            
+            DefineElement element = new DefineElement(null, _listContainer);
+            DefineElement element2 = new DefineElement(null, _listContainer);
         }
 
         private void OnGUI()

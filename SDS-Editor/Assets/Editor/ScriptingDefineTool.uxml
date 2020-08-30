@@ -10,54 +10,6 @@
     </engine:VisualElement>
     
     <engine:VisualElement name="Container" class="container">
-        <engine:ListView name="ScriptingDefineSymbolList" class="listView">
-            <engine:VisualElement name="Define" class="define">
-                
-                <engine:VisualElement name="DefineText" class="define__textField">
-                    <engine:Label text="Define Name:" class="textField__label"  />
-                    <engine:TextField name="DefineName" class="textField__name" />
-                </engine:VisualElement>
-                
-                <engine:VisualElement name="Platforms" class="define__platforms">
-                    <engine:Button name="PlatformAndroid" class="platform__button">
-                        <engine:Image class="platform__image platform__image--android" />
-                    </engine:Button>
-
-                    <engine:Button name="PlatformIos" class="platform__button">
-                        <engine:Image class="platform__image platform__image--ios" />
-                    </engine:Button>
-
-                    <engine:Button name="PlatformWinStandalone" class="platform__button">
-                        <engine:Image class="platform__image platform__image--winStandalone" />
-                    </engine:Button>
-
-                    <engine:Button name="PlatformMacStandalone" class="platform__button">
-                        <engine:Image class="platform__image platform__image--macStandalone" />
-                    </engine:Button>
-
-                    <engine:Button name="PlatformLinuxStandalone" class="platform__button">
-                        <engine:Image class="platform__image platform__image--linuxStandalone" />
-                    </engine:Button>
-
-                    <engine:Button name="PlatformWebGL" class="platform__button">
-                        <engine:Image class="platform__image platform__image--webGL" />
-                    </engine:Button>
-                </engine:VisualElement>
-                
-                <engine:VisualElement name="DefineOperations" class="define__operations">
-                    <engine:Button name="UseDefine" class="operation__button">
-                        <engine:Image class="operation__image operation__image--checked" />
-                    </engine:Button>
-                    
-                    <engine:Button name="AddDefine" class="operation__button"> 
-                        <engine:Image class="operation__image operation__image--add" />
-                    </engine:Button>
-                    
-                    <engine:Button name="RemoveDefine" class="operation__button">
-                        <engine:Image class="operation__image operation__image--remove" />
-                    </engine:Button>
-                </engine:VisualElement>
-            </engine:VisualElement>
-        </engine:ListView>
+        <engine:ListView name="ScriptingDefineSymbolList" class="listView" />
     </engine:VisualElement>
 </engine:UXML>
