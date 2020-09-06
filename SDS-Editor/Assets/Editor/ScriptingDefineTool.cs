@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using SDS.Data;
+using SDS.Editor.Data;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -10,7 +10,8 @@ namespace SDS.Editor
 {
     public class ScriptingDefineTool : EditorWindow
     {
-        private List<ScriptingDefineSymbolDataModel> _defines;
+        private List<ScriptingDefineSymbolDataModel> _savedDefines;
+        private List<DefineElement> _defineElements = new List<DefineElement>();
         private VisualElement _listContainer;
         
         [MenuItem("Tools/ScriptingDefineTool")]
@@ -35,8 +36,24 @@ namespace SDS.Editor
 
             _listContainer = root.Q<ListView>("ScriptingDefineSymbolList");
             
-            DefineElement element = new DefineElement(null, _listContainer);
-            DefineElement element2 = new DefineElement(null, _listContainer);
+            ConnectEvents(root);
+            UpdateList();
+            
+        }
+
+        private void ConnectEvents(VisualElement root)
+        {
+            var applyButton = root.Q<Button>("Apply");
+            var addNew = root.Q<Button>("AddNew");
+            var removeAll = root.Q<Button>("RemoveAll");
+
+            applyButton.clicked += ApplyDefines;
+            addNew.clicked += () =>
+            {
+                CreateNewDefine();
+                UpdateList();
+            };
+            removeAll.clicked += DeleteAllDefines;
         }
 
         private void OnGUI()
@@ -46,26 +63,30 @@ namespace SDS.Editor
 
         private List<ScriptingDefineSymbolDataModel> LoadDefines()
         {
-            var defines = AssetDatabase.LoadAllAssetsAtPath("Assets/Scripts/Data/").ToList();
-            return defines.OfType<ScriptingDefineSymbolDataModel>().ToList();
+            var defines = FileHelper.GetAllScriptablesOfTypeFromPath<ScriptingDefineSymbolDataModel>("Assets/Editor/Data");
+            return defines.ToList();
         }
 
-        private void PopulateList()
+        private void UpdateList()
         {
-            _defines = LoadDefines();
-            if (_defines == null || _defines.Count == 0)
+            _savedDefines = LoadDefines();
+            
+            if (_savedDefines == null || _savedDefines.Count == 0 && _defineElements.Count == 0)
             {
-                
+                CreateNewDefine();
             }
             else
             {
-                
+                foreach (var define in _savedDefines)
+                {
+                    CreateNewDefine(define);
+                }
             }
         }
 
         private void ApplyDefines()
         {
-            foreach (var define in _defines)
+            foreach (var define in _savedDefines)
             {
                 switch (Application.platform)
                 {
@@ -83,6 +104,32 @@ namespace SDS.Editor
                         break;
                 }
             }
+        }
+
+        private void CreateNewDefine()
+        {
+            var dataModel = CreateInstance<ScriptingDefineSymbolDataModel>();
+            var element = new DefineElement(dataModel, _listContainer);
+            _defineElements.Add(element);
+        }
+
+        private void CreateNewDefine(ScriptingDefineSymbolDataModel data)
+        {
+            var element = new DefineElement(data, _listContainer);
+            _defineElements.Add(element);
+        }
+
+        private void DeleteAllDefines()
+        {
+            foreach (var define in _savedDefines)
+            {
+                AssetDatabase.DeleteAsset(AssetDatabase.GetAssetPath(define));
+            }
+            _savedDefines.Clear();
+            _defineElements.Clear();
+            
+            _listContainer.Clear();
+            UpdateList();
         }
     }
 }

@@ -1,8 +1,7 @@
 ﻿using System;
-using UnityEditor;
 using UnityEngine;
 
-namespace SDS.Data
+namespace SDS.Editor.Data
 {
     [Flags]
     public enum Platforms
@@ -29,7 +28,6 @@ namespace SDS.Data
         public void SetScriptingDefineSymbol(string symbol)
         {
             scriptingDefineSymbol = symbol;
-            
         }
     }
 }

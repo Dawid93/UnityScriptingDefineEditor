@@ -12,4 +12,12 @@
     <engine:VisualElement name="Container" class="container">
         <engine:ListView name="ScriptingDefineSymbolList" class="listView" />
     </engine:VisualElement>
+    
+    <engine:VisualElement name="Options" class="options">
+        <engine:VisualElement class="options__container">
+        <engine:Button name="AddNew" class="option__button option__button--add" text="Add" />
+        <engine:Button name="RemoveAll" class="option__button option__button--remove" text="Remove All" />
+        </engine:VisualElement>
+        <engine:Button name="Apply" class="option__button option__button--apply" text="Apply" />
+    </engine:VisualElement>
 </engine:UXML>
